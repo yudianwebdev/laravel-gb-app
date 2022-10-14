@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('add-bg', [ModelBackgroundController::class, 'imgPost']);
 Route::post('add-tag', [ModelTagkategoriController::class, 'store']);
+Route::get('list-all-bg/{keyword}', [ModelBackgroundController::class, 'show']);
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });

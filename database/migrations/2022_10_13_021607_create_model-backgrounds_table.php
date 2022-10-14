@@ -18,7 +18,7 @@ class CreateModelBackgroundsTable extends Migration
             $table->string('images');
             $table->string('name');
             $table->string('file_path')->default("");
-            $table->integer('id_tag');
+            $table->json('id_tag');
             $table->timestamps();
         });
     }

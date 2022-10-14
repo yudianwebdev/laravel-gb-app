@@ -8,10 +8,28 @@ use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+use function PHPSTORM_META\map;
 
 class ModelBackgroundController extends Controller
 {
     //
+
+    public function show($keyword)
+    {
+        //
+        // dd("tes");
+        $data_tag
+            = modelbackground::whereRaw('json_contains(id_tag, \'[ ' . $keyword . ']\')')->get();
+
+        $res = [
+            'massage' => 'Data Ditemukan',
+            'Data' => $data_tag
+        ];
+        return response()->json($res, Response::HTTP_OK);
+    }
+
     public function imgPost(Request $request)
     {
         $vallidator = Validator::make($request->all(), [
@@ -33,12 +51,12 @@ class ModelBackgroundController extends Controller
             // $imgloc ='api.ambyarfood.com'.'/images/'.$imageName;
 
             // $request->image->move(public_path('images'), $imageName);
+            // dd($request->all());
             $img = $request->file('image')->store("post-images", 'public');
-
             $ads = modelbackground::create([
                 "images" => Storage::url($img),
                 "name" => $request->name,
-                "id_tag" => $request->id_tag,
+                "id_tag" => json_decode($request->id_tag, true),
 
             ]);
             return response()->json($ads, Response::HTTP_CREATED);

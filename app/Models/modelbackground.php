@@ -13,4 +13,8 @@ class modelbackground extends Model
         'name',
         'id_tag'
     ];
+
+    protected $casts = [
+        'id_tag'  => 'array',
+    ];
 }
